@@ -1,6 +1,7 @@
 """
 Loads and unions all XLSX files found in the data/candidates folder.
-Each XLSX must have the expected column structure.
+Each XLSX must contain the core candidate fields.
+Checkbox columns are added automatically if missing.
 """
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -9,10 +10,25 @@ import pandas as pd
 from pathlib import Path
 
 REQUIRED_COLS = [
-    "Client_code", "Exam_code", "Gender", "Name", "Surname",
-    "Country_of_birth", "Date_of_birth", "Place_of_birth", "Email",
-    "Gender_chk", "Name_chk", "Surname_chk", "Date_of_birth_chk",
-    "Place_of_birth_chk", "Country_of_birth_chk", "Email_chk",
+    "Client_code",
+    "Exam_code",
+    "Gender",
+    "Name",
+    "Surname",
+    "Country_of_birth",
+    "Date_of_birth",
+    "Place_of_birth",
+    "Email",
+]
+
+CHECKBOX_COLS = [
+    "Gender_chk",
+    "Name_chk",
+    "Surname_chk",
+    "Date_of_birth_chk",
+    "Place_of_birth_chk",
+    "Country_of_birth_chk",
+    "Email_chk",
 ]
 
 def load_candidates(xlsx_folder: Path) -> tuple:
@@ -51,5 +67,11 @@ def load_candidates(xlsx_folder: Path) -> tuple:
             "The following required columns are missing from your XLSX files:\n"
             + "\n".join(f"  • {c}" for c in missing)
         )
+
+    for col in CHECKBOX_COLS:
+        if col not in combined.columns:
+            combined[col] = ""
+
+    combined = combined.fillna("")
 
     return combined, warnings
