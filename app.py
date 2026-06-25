@@ -20,7 +20,7 @@ st.set_page_config(
 # ─── PATHS ───────────────────────────────────────────────────────────────────
 BASE_DIR     = Path(__file__).resolve().parent
 XLSX_FOLDER   = BASE_DIR / "data" / "candidates"
-PDF_TEMPLATE = BASE_DIR / "input" / "templates" / "data_form_editable.pdf"
+PDF_TEMPLATE = BASE_DIR / "data" / "template" / "data_form_editable.pdf"
 OUTPUT_DIR   = BASE_DIR / "output"
 
 # ─── SESSION STATE INIT ──────────────────────────────────────────────────────
