@@ -19,7 +19,7 @@ st.set_page_config(
 
 # ─── PATHS ───────────────────────────────────────────────────────────────────
 BASE_DIR     = Path(__file__).resolve().parent
-CSV_FOLDER   = BASE_DIR / "data"
+XLSX_FOLDER   = BASE_DIR / "data" / "candidates"
 PDF_TEMPLATE = BASE_DIR / "input" / "templates" / "data_form_editable.pdf"
 OUTPUT_DIR   = BASE_DIR / "output"
 
@@ -71,11 +71,11 @@ st.title("📋 Candidate Change Request")
 if st.session_state.df is None:
     with st.spinner("Loading candidate data…"):
         try:
-            df, warns = load_candidates(CSV_FOLDER)
+            df, warns = load_candidates(XLSX_FOLDER)
             st.session_state.df = df
             for w in warns:
                 st.warning(w)
-            st.success(f"✅ {len(df):,} candidates loaded from {CSV_FOLDER.name}/")
+            st.success(f"✅ {len(df):,} candidates loaded from {XLSX_FOLDER.name}/")
         except Exception as e:
             st.error(f"❌ Could not load data:\n\n{e}")
             st.stop()

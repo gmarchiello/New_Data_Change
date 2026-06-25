@@ -17,15 +17,15 @@ REQUIRED_COLS = [
 
 def load_candidates(csv_folder: Path) -> tuple:
     """
-    Reads all CSV files in csv_folder, unions them with pandas.
+    Reads all XLSX files in csv_folder, unions them with pandas.
     Returns (combined_dataframe, list_of_warnings).
     """
-    csv_files = sorted(csv_folder.glob("*.csv"))
+    xlsx_files = sorted(xlsx_folder.glob("*.xlsx"))
 
-    if not csv_files:
+    if not xlsx_files:
         raise FileNotFoundError(
-            f"No CSV files found in: {csv_folder}\n"
-            "Please place at least one CSV file in the 'data/' folder."
+            f"No CSV files found in: {xlsx_folder}\n"
+            "Please place at least one XLSX file in the 'data/' folder."
         )
 
     frames = []
@@ -33,7 +33,7 @@ def load_candidates(csv_folder: Path) -> tuple:
 
     for f in csv_files:
         try:
-            df = pd.read_csv(f, dtype=str)
+            df = pd.read_excel(f, dtype=str)
             df.columns = df.columns.str.strip()
             df["_source_file"] = f.name  # track which file each row came from
             frames.append(df)
