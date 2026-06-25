@@ -1,0 +1,9 @@
+# macOS system files
+.DS_Store
+
+# Output folder (generated PDFs)
+output/
+
+# Python cache files
+__pycache__/
+*.pyc
